@@ -1,5 +1,5 @@
 from alchemize import Attr, JsonMappedModel
-from domain.types import OrderStatus
+from petstore.domain.domain_types import OrderStatus
 
 
 class Order(JsonMappedModel):

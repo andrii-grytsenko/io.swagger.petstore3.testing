@@ -1,7 +1,7 @@
 from pytest import *
 
-import config as cfg
-from api.pet_store3_api import *
+from petstore import config as cfg
+from petstore.api.pet_store3_api import *
 
 
 @fixture(scope="class")

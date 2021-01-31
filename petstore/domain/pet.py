@@ -1,7 +1,7 @@
 from alchemize import Attr, JsonMappedModel
-from domain.category import Category
-from domain.tag import Tag
-from domain.types import PetStatus
+from petstore.domain.category import Category
+from petstore.domain.tag import Tag
+from petstore.domain.domain_types import PetStatus
 
 
 class Pet(JsonMappedModel):

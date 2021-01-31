@@ -1,5 +1,5 @@
 from alchemize import Attr, JsonMappedModel
-from domain.address import Address
+from petstore.domain.address import Address
 
 
 class Customer(JsonMappedModel):

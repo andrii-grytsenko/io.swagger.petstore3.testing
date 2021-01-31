@@ -1,5 +1,5 @@
 from alchemize import Attr, JsonMappedModel
-from domain.types import UserStatus
+from petstore.domain.domain_types import UserStatus
 
 
 class User(JsonMappedModel):

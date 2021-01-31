@@ -1,11 +1,9 @@
-from pytest import *
-
-from domain.category import Category
-from domain.order import Order
-from domain.pet import Pet
-from domain.tag import Tag
-from domain.types import *
-from domain.user import User
+from petstore.domain.category import Category
+from petstore.domain.order import Order
+from petstore.domain.pet import Pet
+from petstore.domain.tag import Tag
+from petstore.domain.user import User
+from petstore.domain.domain_types import *
 
 
 class TestPetStoreApi:
@@ -14,8 +12,10 @@ class TestPetStoreApi:
     def test_pet_add(self, api):
         pet = Pet(1, "Dog", Category(1, "Dogs"), [], [Tag(1, "tag1")], PetStatus.available)
         response = api.pet_add(pet)
-        assert response.id == pet.id, f"Error in ID {response.id}"
-        assert response.name == pet.name, f"Error in ID {response.name}"
+        assert response.code == 200
+        assert response.type == ApiResponseType.ok
+        # assert response.id == pet.id, f"Error in ID {response.id}"
+        # assert response.name == pet.name, f"Error in ID {response.name}"
 
     #@mark.skip
     def test_pet_update(self, api):

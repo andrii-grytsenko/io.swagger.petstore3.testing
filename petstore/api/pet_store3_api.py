@@ -1,11 +1,12 @@
 from alchemize import JsonTransmuter
 from requests import *
 
-from domain.order import Order
-from domain.pet import Pet
-from domain.tag import Tag
-from domain.types import *
-from domain.user import User
+from petstore.api.api_response import *
+from petstore.domain.order import Order
+from petstore.domain.pet import Pet
+from petstore.domain.tag import Tag
+from petstore.domain.user import User
+from petstore.domain.domain_types import *
 
 
 class PetStoreApi:
@@ -17,31 +18,53 @@ class PetStoreApi:
         response = put(f"{self.base_url}pet",
                        headers=self.headers,
                        data=JsonTransmuter.transmute_to(pet_obj))
-        return JsonTransmuter.transmute_from(response.text, Pet) \
-            if response.ok else response.raise_for_status()
+        return ApiResponse(
+            response.status_code,
+            ApiResponseType.ok if response.ok else ApiResponseType.error,
+            JsonTransmuter.transmute_from(response.text, Pet) if response.ok else response.text
+        )
+        # return JsonTransmuter.transmute_from(response.text, Pet) \
+        #     if response.ok else response.raise_for_status()
 
     def pet_add(self, pet_obj: Pet):
         response = post(f"{self.base_url}pet",
                         headers=self.headers,
                         data=JsonTransmuter.transmute_to(pet_obj))
-        return JsonTransmuter.transmute_from(response.text, Pet) \
-            if response.ok else response.raise_for_status()
+        return ApiResponse(
+            response.status_code,
+            ApiResponseType.ok if response.ok else ApiResponseType.error,
+            JsonTransmuter.transmute_from(response.text, Pet) if response.ok else response.text
+        )
+        # return JsonTransmuter.transmute_from(response.text, Pet) \
+        #     if response.ok else response.raise_for_status()
 
     def pet_find_by_status(self, status: PetStatus):
         response = get(f"{self.base_url}pet/findByStatus",
                        headers=self.headers,
                        params={"status": status.value})
-        return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
-            if response.ok else \
-            response.raise_for_status()
+        return ApiResponse(
+            response.status_code,
+            ApiResponseType.ok if response.ok else ApiResponseType.error,
+            list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json()))
+            if response.ok else response.text
+        )
+        # return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
+        #     if response.ok else \
+        #     response.raise_for_status()
 
     def pet_find_by_tags(self, tags: [Tag]):
         response = get(f"{self.base_url}pet/findByTags",
                        headers=self.headers,
                        params={"tags": list(map(JsonTransmuter.transmute_to, tags))})
-        return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
-            if response.ok else \
-            response.raise_for_status()
+        return ApiResponse(
+            response.status_code,
+            ApiResponseType.ok if response.ok else ApiResponseType.error,
+            list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json()))
+            if response.ok else response.text
+        )
+        # return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
+        #     if response.ok else \
+        #     response.raise_for_status()
 
     def pet_find_by_id(self, pet_id):
         response = get(f"{self.base_url}pet/{pet_id}",
@@ -53,8 +76,13 @@ class PetStoreApi:
         response = post(f"{self.base_url}pet/{pet_id}",
                         headers=self.headers,
                         params={"name": name, "status": status.value})
-        return JsonTransmuter.transmute_from(response.text, Pet) \
-            if response.ok else response.raise_for_status()
+        return ApiResponse(
+            response.status_code,
+            ApiResponseType.ok if response.ok else ApiResponseType.error,
+            JsonTransmuter.transmute_from(response.text, Pet) if response.ok else response.text
+        )
+        # return JsonTransmuter.transmute_from(response.text, Pet) \
+        #     if response.ok else response.raise_for_status()
 
     def pet_delete(self, pet_id, api_key):
         headers_ = self.headers.copy()

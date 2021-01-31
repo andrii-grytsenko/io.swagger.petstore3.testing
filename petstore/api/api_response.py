@@ -1,4 +1,4 @@
-from domain.types import ApiResponseType
+from petstore.domain.domain_types import ApiResponseType
 
 
 class ApiResponse:
