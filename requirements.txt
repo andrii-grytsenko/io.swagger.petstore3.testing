@@ -1,0 +1,6 @@
+python-dateutil
+requests
+pytest
+alchemize
+allure-pytest
+pytest-html

@@ -1,0 +1,140 @@
+from alchemize import JsonTransmuter
+from requests import *
+
+from domain.order import Order
+from domain.pet import Pet
+from domain.tag import Tag
+from domain.types import *
+from domain.user import User
+
+
+class PetStoreApi:
+    def __init__(self, base_url):
+        self.base_url = base_url + ("/" if base_url[-1] != "/" else "")
+        self.headers = {"Accept": "application/json", "Content-Type": "application/json"}
+
+    def pet_update(self, pet_obj: Pet):
+        response = put(f"{self.base_url}pet",
+                       headers=self.headers,
+                       data=JsonTransmuter.transmute_to(pet_obj))
+        return JsonTransmuter.transmute_from(response.text, Pet) \
+            if response.ok else response.raise_for_status()
+
+    def pet_add(self, pet_obj: Pet):
+        response = post(f"{self.base_url}pet",
+                        headers=self.headers,
+                        data=JsonTransmuter.transmute_to(pet_obj))
+        return JsonTransmuter.transmute_from(response.text, Pet) \
+            if response.ok else response.raise_for_status()
+
+    def pet_find_by_status(self, status: PetStatus):
+        response = get(f"{self.base_url}pet/findByStatus",
+                       headers=self.headers,
+                       params={"status": status.value})
+        return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
+            if response.ok else \
+            response.raise_for_status()
+
+    def pet_find_by_tags(self, tags: [Tag]):
+        response = get(f"{self.base_url}pet/findByTags",
+                       headers=self.headers,
+                       params={"tags": list(map(JsonTransmuter.transmute_to, tags))})
+        return list(map(lambda x: JsonTransmuter.transmute_from(x, Pet), response.json())) \
+            if response.ok else \
+            response.raise_for_status()
+
+    def pet_find_by_id(self, pet_id):
+        response = get(f"{self.base_url}pet/{pet_id}",
+                       headers=self.headers)
+        return JsonTransmuter.transmute_from(response.text, Pet) \
+            if response.ok else response.raise_for_status()
+
+    def pet_update_by_form_data(self, pet_id, name, status: PetStatus):
+        response = post(f"{self.base_url}pet/{pet_id}",
+                        headers=self.headers,
+                        params={"name": name, "status": status.value})
+        return JsonTransmuter.transmute_from(response.text, Pet) \
+            if response.ok else response.raise_for_status()
+
+    def pet_delete(self, pet_id, api_key):
+        headers_ = self.headers.copy()
+        headers_["api_key"] = str(api_key)
+        response = delete(f"{self.base_url}pet/{pet_id}",
+                          headers=headers_)
+        return response.ok if response.ok else response.raise_for_status()
+
+    def pet_upload_image(self, pet_id, metadata, image):
+        headers_ = self.headers.copy()
+        headers_["Content-Type"] = "application/octet-stream"
+        response = post(f"{self.base_url}pet/{pet_id}/uploadImage",
+                        headers=headers_,
+                        params={"additionalMetadata": metadata},
+                        data=image)
+        return JsonTransmuter.transmute_from(response.text, Pet) \
+            if response.ok else response.raise_for_status()
+
+    def store_inventory(self):
+        response = get(f"{self.base_url}store/inventory",
+                       headers=self.headers)
+        return response.json() if response.ok else response.raise_for_status()
+
+    def store_place_order(self, order: Order):
+        response = post(f"{self.base_url}store/order",
+                        headers=self.headers,
+                        data=JsonTransmuter.transmute_to(order))
+        return JsonTransmuter.transmute_from(response.text, Order) \
+            if response.ok else response.raise_for_status()
+
+    def store_find_order_by_id(self, order_id):
+        response = get(f"{self.base_url}store/order/{order_id}",
+                       headers=self.headers)
+        return JsonTransmuter.transmute_from(response.text, Order) \
+            if response.ok else response.raise_for_status()
+
+    def store_delete_order(self, order_id):
+        response = delete(f"{self.base_url}store/order/{order_id}",
+                          headers=self.headers)
+        return response.ok if response.ok else response.raise_for_status()
+
+    def user_create(self, user: User):
+        response = post(f"{self.base_url}user",
+                        headers=self.headers,
+                        data=JsonTransmuter.transmute_to(user))
+        return JsonTransmuter.transmute_from(response.text, User) \
+            if response.ok else response.raise_for_status()
+
+    def user_create_with_list(self, user_list: [User]):
+        response = post(f"{self.base_url}createWithList",
+                        headers=self.headers,
+                        data=list(map(JsonTransmuter.transmute_to, user_list)))
+        return list(map(
+            lambda x: JsonTransmuter.transmute_from(response.text, User), response.json()
+        )) if response.ok else response.raise_for_status()
+
+    def user_login(self, user_name, password):
+        response = get(f"{self.base_url}user/login",
+                       headers=self.headers,
+                       params={"username": user_name, "password": password})
+        return response.text if response.ok else response.raise_for_status()
+
+    def user_logout(self):
+        response = get(f"{self.base_url}user/logout",
+                       headers=self.headers)
+        return response.ok if response.ok else response.raise_for_status()
+
+    def user_find_by_name(self, user_name):
+        response = get(f"{self.base_url}user/{user_name}",
+                       headers=self.headers)
+        return JsonTransmuter.transmute_from(response.text, User) if response.ok else response.raise_for_status()
+
+    def user_update(self, user_name, user: User):
+        response = put(f"{self.base_url}user/{user_name}",
+                       headers=self.headers,
+                       data=JsonTransmuter.transmute_to(user))
+        return JsonTransmuter.transmute_from(response.text, User) \
+            if response.ok else response.raise_for_status()
+
+    def user_delete(self, user_name):
+        response = delete(f"{self.base_url}user/{user_name}",
+                          headers=self.headers)
+        return response.ok if response.ok else response.raise_for_status()
