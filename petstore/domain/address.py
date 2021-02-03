@@ -1,7 +1,8 @@
-from alchemize import Attr, JsonMappedModel
+from alchemize import Attr, JsonMappedModel, JsonTransmuter
+from petstore.domain.base_api_class import BaseApiClass
 
 
-class Address(JsonMappedModel):
+class Address(BaseApiClass):
     __mapping__ = {
         "street": Attr("street", str),
         "city": Attr("city", str),
@@ -24,3 +25,9 @@ class Address(JsonMappedModel):
             return Address(json["street"], json["city"], json["state"], json["zip"])
         else:
             return None
+
+    # def __eq__(self, other):
+    #     if isinstance(other, self.__class__):
+    #         return JsonTransmuter.transmute_to(self) == JsonTransmuter.transmute_to(other)
+    #     else:
+    #         return False

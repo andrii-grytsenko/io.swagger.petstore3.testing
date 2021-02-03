@@ -1,8 +1,9 @@
-from alchemize import Attr, JsonMappedModel
+from alchemize import Attr, JsonMappedModel, JsonTransmuter
+from petstore.domain.base_api_class import BaseApiClass
 from petstore.domain.domain_types import OrderStatus
 
 
-class Order(JsonMappedModel):
+class Order(BaseApiClass):
     __mapping__ = {
         "id": Attr("id", int),
         "petId": Attr("pet_id", int),
@@ -37,6 +38,12 @@ class Order(JsonMappedModel):
                          json["complete"])
         else:
             return None
+
+    # def __eq__(self, other):
+    #     if isinstance(other, self.__class__):
+    #         return JsonTransmuter.transmute_to(self) == JsonTransmuter.transmute_to(other)
+    #     else:
+    #         return False
 
     @staticmethod
     def store_inventory(): return Order.db.store_inventory()

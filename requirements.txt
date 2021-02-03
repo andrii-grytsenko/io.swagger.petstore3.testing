@@ -4,3 +4,4 @@ pytest
 alchemize
 allure-pytest
 pytest-html
+pytest-order

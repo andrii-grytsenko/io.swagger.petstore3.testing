@@ -1,8 +1,9 @@
-from alchemize import Attr, JsonMappedModel
+from alchemize import Attr, JsonMappedModel, JsonTransmuter
+from petstore.domain.base_api_class import BaseApiClass
 from petstore.domain.domain_types import UserStatus
 
 
-class User(JsonMappedModel):
+class User(BaseApiClass):
     __mapping__ = {
         "id": Attr("id", int),
         "name": Attr("user_name", str),
@@ -44,6 +45,12 @@ class User(JsonMappedModel):
                         json["phone"], UserStatus(json["status"]))
         else:
             return None
+
+    # def __eq__(self, other):
+    #     if isinstance(other, self.__class__):
+    #         return JsonTransmuter.transmute_to(self) == JsonTransmuter.transmute_to(other)
+    #     else:
+    #         return False
 
     @staticmethod
     def create_with_list(user_list: []): User.db.user_create_with_list(user_list)
