@@ -1,5 +1,3 @@
-from petstore.domain.domain_types import OrderStatus
-
 order_place = [
     ('{"id":9910,"petId":99101,"quantity":7,"shipDate":"2021-02-03T19:43:55.849+00:00","status":"approved",'
      '"complete":true}', 200),
