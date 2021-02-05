@@ -22,11 +22,11 @@ pet_update_ids = [f"Data=[{item[0]}], expected code={item[1]}" for item in pet_u
 
 pet_id = [
     (9910, '{"id":9910,"name":"new-dog9910","category":{"id":1,"name":"Dogs"},"photoUrls":["string"],"tags":[{"id":0,'
-     '"name":"string"}],"status":"sold"}', 200),
+           '"name":"string"}],"status":"sold"}', 200),
     (9911, '{"id":9911,"name":"new-dog9911","category":{"id":1,"name":"Dogs"},"photoUrls":["string"],"tags":[{"id":0,'
-     '"name":"string"}],"status":"available"}', 200),
+           '"name":"string"}],"status":"available"}', 200),
     (9912, '{"id":9912,"name":"new-dog9912","category":{"id":1,"name":"Dogs"},"photoUrls":["string"],"tags":[{"id":0,'
-     '"name":"string"}],"status":"pending"}', 200),
+           '"name":"string"}],"status":"pending"}', 200),
     (999999, 'Pet not found', 404),
 ]
 pet_id_ids = [f"Pet ID=[{item[0]}], expected code={item[2]}" for item in pet_id]

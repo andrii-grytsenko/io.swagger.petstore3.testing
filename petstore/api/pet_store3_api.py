@@ -2,11 +2,11 @@ from alchemize import JsonTransmuter
 from requests import *
 
 from petstore.api.api_response import *
+from petstore.domain.domain_types import *
 from petstore.domain.order import Order
 from petstore.domain.pet import Pet
 from petstore.domain.tag import Tag
 from petstore.domain.user import User
-from petstore.domain.domain_types import *
 
 
 class PetStoreApi:

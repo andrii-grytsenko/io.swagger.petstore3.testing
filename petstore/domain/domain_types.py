@@ -17,11 +17,3 @@ class UserStatus(Enum):
     registered = 1
     active = 2
     closed = 3
-
-
-class ApiResponseType(Enum):
-    error = "Error"
-    warning = "Warning"
-    info = "Info"
-    ok = "OK"
-    too_busy = "Too busy"

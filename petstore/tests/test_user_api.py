@@ -1,7 +1,7 @@
 from alchemize import JsonTransmuter
 from pytest import mark
 
-from petstore.domain.domain_types import *
+from petstore.api.api_response import ApiResponseType
 from petstore.domain.user import User
 
 

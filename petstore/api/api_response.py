@@ -1,4 +1,12 @@
-from petstore.domain.domain_types import ApiResponseType
+from enum import Enum
+
+
+class ApiResponseType(Enum):
+    error = "Error"
+    warning = "Warning"
+    info = "Info"
+    ok = "OK"
+    too_busy = "Too busy"
 
 
 class ApiResponse:
@@ -6,16 +14,6 @@ class ApiResponse:
         self.code = code
         self.type = response_type
         self.message = message
-
-    def to_json(self):
-        return {"code": self.code, "type": self.type.value, "message": self.message}
-
-    @staticmethod
-    def from_json(json):
-        if "code" in json and "type" in json and "message" in json:
-            return ApiResponse(json["code"], json["type"], json["message"])
-        else:
-            return None
 
 
 class ApiResponseError(Exception):
