@@ -1,4 +1,5 @@
 from alchemize import Attr
+
 from petstore.domain.base_api_class import BaseApiClass
 
 

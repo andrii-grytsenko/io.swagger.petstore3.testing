@@ -1,6 +1,7 @@
 from alchemize import Attr
-from petstore.domain.base_api_class import BaseApiClass
+
 from petstore.domain.address import Address
+from petstore.domain.base_api_class import BaseApiClass
 
 
 class Customer(BaseApiClass):

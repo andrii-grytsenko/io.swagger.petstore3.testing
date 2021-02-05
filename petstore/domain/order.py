@@ -1,4 +1,5 @@
 from alchemize import Attr
+
 from petstore.domain.base_api_class import BaseApiClass
 from petstore.domain.domain_types import OrderStatus
 
@@ -13,9 +14,10 @@ class Order(BaseApiClass):
         "complete": Attr("complete", bool),
     }
 
-    db = None # database.Database()
+    db = None  # database.Database()
 
-    def __init__(self, order_id=None, pet_id=None, quantity=None, ship_date=None, status: OrderStatus=None, complete=None):
+    def __init__(self, order_id=None, pet_id=None, quantity=None, ship_date=None, status: OrderStatus = None,
+                 complete=None):
         self.id = order_id
         self.pet_id = pet_id
         self.quantity = quantity
@@ -40,11 +42,15 @@ class Order(BaseApiClass):
             return None
 
     @staticmethod
-    def store_inventory(): return Order.db.store_inventory()
+    def store_inventory():
+        return Order.db.store_inventory()
 
     @staticmethod
-    def find_by_id(order_id): return Order.db.store_find_order_by_id(order_id)
+    def find_by_id(order_id):
+        return Order.db.store_find_order_by_id(order_id)
 
-    def place(self): self.db.store_place_order(self)
+    def place(self):
+        self.db.store_place_order(self)
 
-    def delete(self): self.db.store_delete_order(self)
+    def delete(self):
+        self.db.store_delete_order(self)

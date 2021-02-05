@@ -1,8 +1,9 @@
 from alchemize import Attr
+
 from petstore.domain.base_api_class import BaseApiClass
 from petstore.domain.category import Category
-from petstore.domain.tag import Tag
 from petstore.domain.domain_types import PetStatus
+from petstore.domain.tag import Tag
 
 
 class Pet(BaseApiClass):
@@ -15,10 +16,10 @@ class Pet(BaseApiClass):
         "status": Attr("status", PetStatus),
     }
 
-    db = None # database.Database()
+    db = None  # database.Database()
 
-    def __init__(self, pet_id=None, name=None, category: Category=None,
-                 photo_urls: []=None, tags: [Tag]=None, status: PetStatus=None):
+    def __init__(self, pet_id=None, name=None, category: Category = None,
+                 photo_urls: [] = None, tags: [Tag] = None, status: PetStatus = None):
         self.id = pet_id
         self.name = name
         self.category = category
@@ -42,24 +43,29 @@ class Pet(BaseApiClass):
             return None
 
     @staticmethod
-    def find_by_status(status: PetStatus): return Pet.db.pet_find_by_status(status)
+    def find_by_status(status: PetStatus):
+        return Pet.db.pet_find_by_status(status)
 
     @staticmethod
-    def find_by_tags(tag_list): return Pet.db.pet_find_by_tags(tag_list)
+    def find_by_tags(tag_list):
+        return Pet.db.pet_find_by_tags(tag_list)
 
     @staticmethod
-    def find_by_id(pet_id): return Pet.db.pet_find_by_id(pet_id)
+    def find_by_id(pet_id):
+        return Pet.db.pet_find_by_id(pet_id)
 
-    def update(self): self.db.pet_update(self)
+    def update(self):
+        self.db.pet_update(self)
 
-    def add(self): self.db.pet_add(self)
+    def add(self):
+        self.db.pet_add(self)
 
     def update_with_form_data(self, name, status: PetStatus):
         self.db.pet_update_by_form_data(self.id, name, status)
 
-    def delete(self, api_key): self.db.pet_delete(self.id, api_key)
+    def delete(self, api_key):
+        self.db.pet_delete(self.id, api_key)
 
     def upload_image(self, file_name, metadata):
         with open(file_name, "rb") as f:
             self.db.pet_upload_image(self.id, metadata, f)
-
