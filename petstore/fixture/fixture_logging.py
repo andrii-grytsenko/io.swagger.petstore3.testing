@@ -6,8 +6,8 @@ from pytest import *
 
 @fixture(scope="class")
 def logger():
-    log_file = logging.FileHandler(os.path.join(os.pardir, 'logs', 'api_testing.log'), 'a')
-    # log_file = logging.FileHandler(os.path.join(os.curdir, 'petstore', 'logs', 'api_testing.log'), 'a')
+    # log_file = logging.FileHandler(os.path.join(os.pardir, 'logs', 'api_testing.log'), 'a')
+    log_file = logging.FileHandler(os.path.join(os.curdir, 'petstore', 'logs', 'api_testing.log'), 'a')
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     log_file.setFormatter(formatter)
     _logger = logging.getLogger(None)
