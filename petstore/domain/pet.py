@@ -1,4 +1,4 @@
-from alchemize import Attr, JsonMappedModel, JsonTransmuter
+from alchemize import Attr
 from petstore.domain.base_api_class import BaseApiClass
 from petstore.domain.category import Category
 from petstore.domain.tag import Tag
@@ -40,12 +40,6 @@ class Pet(BaseApiClass):
                        PetStatus(json["status"]))
         else:
             return None
-
-    # def __eq__(self, other):
-    #     if isinstance(other, self.__class__):
-    #         return JsonTransmuter.transmute_to(self) == JsonTransmuter.transmute_to(other)
-    #     else:
-    #         return False
 
     @staticmethod
     def find_by_status(status: PetStatus): return Pet.db.pet_find_by_status(status)

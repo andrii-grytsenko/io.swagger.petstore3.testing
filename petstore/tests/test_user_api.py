@@ -21,15 +21,14 @@ class TestUserApi:
         assert response.message == _user
         logger.info("Test PASSED")
 
-    # @mark.order(2)
-    @mark.skip
-    def test_user_create_with_list(self, api, logger):
-        data1 = User(1251, "userName1", "firstName1", "lastName1", "e@ma.il", "password", "phone",
-                     UserStatus.registered)
-        data2 = User(1252, "userName2", "firstName2", "lastName2", "e@ma.il", "password", "phone",
-                     UserStatus.registered)
-        response = api.user_create_with_list([data1, data2])
-        assert len(response) == 2, f"Error adding users"
+    @mark.order(2)
+    def test_user_create_with_list(self, api, logger, dp_user_add_list):
+        _user_list = list(map(lambda x: JsonTransmuter.transmute_from(x, User), dp_user_add_list[0]))
+        logger.info(f"Test case for creating users from list")
+        response = api.user_create_with_list(_user_list)
+        assert response.code == dp_user_add_list[1]
+        assert len(response.message) == len(_user_list)
+        logger.info("Test PASSED")
 
     @mark.order(3)
     def test_user_login(self, api, logger, dp_user_login):
@@ -53,7 +52,7 @@ class TestUserApi:
     @mark.order(5)
     def test_user_find_by_name(self, api, logger, dp_user_find):
         _user = JsonTransmuter.transmute_from(dp_user_find[0], User)
-        logger.info(f"Test case for finding user with name={_user.name}")
+        logger.info(f"Test case for finding user with name={_user.user_name}")
         response = api.user_find_by_name(_user.user_name)
         assert response.code == dp_user_find[1]
         logger.info("Test PASSED")

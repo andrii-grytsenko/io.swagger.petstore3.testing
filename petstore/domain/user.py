@@ -67,3 +67,4 @@ class User(BaseApiClass):
     def update(self, new_user): self.db.user_update(new_user, self)
 
     def delete(self): self.db.user_delete(self.user_name)
+

@@ -39,9 +39,9 @@ pet_status = [
 pet_status_ids = [f"Pet status=[{item[0].value}], expected code={item[1]}" for item in pet_status]
 
 pet_tag = [
-    ('[{"id":0,"name":""Tag1}]', 200),
-    ('[{"id":0,"name":""Tag1},{"id":22,"name":""tag2}]', 200),
-    ('[{"id":10,"name":""tag11}]', 200),
+    (['{"id":0,"name":"Tag1"}'], 200),
+    (['{"id":0,"name":"Tag1"}', '{"id":22,"name":"tag2"}'], 200),
+    (['{"id":10,"name":"tag11"}'], 200),
 ]
 pet_tag_ids = [f"Pet tags=[{item[0]}], expected code={item[1]}" for item in pet_tag]
 

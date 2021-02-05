@@ -1,7 +1,8 @@
-from pytest import mark
-from petstore.domain.order import Order
-from petstore.domain.domain_types import *
 from alchemize import JsonTransmuter
+from pytest import mark
+
+from petstore.domain.domain_types import *
+from petstore.domain.order import Order
 
 
 class TestOrderApi:

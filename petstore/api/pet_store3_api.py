@@ -47,7 +47,7 @@ class PetStoreApi:
 
     def pet_find_by_tags(self, tags: [Tag]):
         tag_list = "" if len(tags) == 0 else "&tags=".join(list(map(lambda x: x.name, tags)))
-        response = get(f"{self.base_url}pet/findByTags?{tags}",
+        response = get(f"{self.base_url}pet/findByTags?tags={tag_list}",
                        headers=self.headers,
                        # params={"tags": list(map(JsonTransmuter.transmute_to, tags))}
                        )
@@ -152,7 +152,7 @@ class PetStoreApi:
     def user_create_with_list(self, user_list: [User]):
         response = post(f"{self.base_url}createWithList",
                         headers=self.headers,
-                        data=list(map(JsonTransmuter.transmute_to, user_list)))
+                        data=str(list(map(JsonTransmuter.transmute_to, user_list))))
         return ApiResponse(
             response.status_code,
             ApiResponseType.ok if response.ok else ApiResponseType.error,
