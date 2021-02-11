@@ -11,7 +11,7 @@ class Customer(BaseApiClass):
         "address": Attr("address", Address)
     }
 
-    def __init__(self, customer_id, user_name, address: Address):
+    def __init__(self, customer_id: int = None, user_name: str = None, address: Address = None):
         self.id = customer_id
         self.user_name = user_name
         self.address = address

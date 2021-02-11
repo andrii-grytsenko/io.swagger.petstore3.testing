@@ -9,7 +9,7 @@ class Category(BaseApiClass):
         "name": Attr("name", str),
     }
 
-    def __init__(self, category_id=None, category_name=None):
+    def __init__(self, category_id: int = None, category_name: str = None):
         self.id = category_id
         self.name = category_name
 

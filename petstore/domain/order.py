@@ -16,8 +16,8 @@ class Order(BaseApiClass):
 
     db = None  # database.Database()
 
-    def __init__(self, order_id=None, pet_id=None, quantity=None, ship_date=None, status: OrderStatus = None,
-                 complete=None):
+    def __init__(self, order_id: int = None, pet_id: int = None, quantity: int = None, ship_date: str = None,
+                 status: OrderStatus = None, complete: bool = None):
         self.id = order_id
         self.pet_id = pet_id
         self.quantity = quantity
@@ -31,7 +31,7 @@ class Order(BaseApiClass):
                 "status": self.status.value, "complete": self.complete}
 
     @staticmethod
-    def from_json(json):
+    def from_json(json: str):
         if "id" in json and "petId" in json \
                 and "quantity" in json and "shipDate" in json \
                 and "status" in json and "complete" in json:
@@ -46,7 +46,7 @@ class Order(BaseApiClass):
         return Order.db.store_inventory()
 
     @staticmethod
-    def find_by_id(order_id):
+    def find_by_id(order_id: int):
         return Order.db.store_find_order_by_id(order_id)
 
     def place(self):

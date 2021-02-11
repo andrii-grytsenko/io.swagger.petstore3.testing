@@ -9,7 +9,7 @@ class Tag(BaseApiClass):
         "name": Attr("name", str)
     }
 
-    def __init__(self, tag_id=None, tag_name=None):
+    def __init__(self, tag_id: int = None, tag_name: str = None):
         self.id = tag_id
         self.name = tag_name
 
@@ -17,7 +17,7 @@ class Tag(BaseApiClass):
         return {"id": self.id, "name": self.name}
 
     @staticmethod
-    def from_json(json):
+    def from_json(json: str):
         if "id" in json and "name" in json:
             return Tag(json["id"], json["name"])
         else:

@@ -18,8 +18,8 @@ class User(BaseApiClass):
 
     db = None  # database.Database()
 
-    def __init__(self, user_id=None, user_name=None, first_name=None, last_name=None,
-                 email=None, password=None, phone=None, user_status: UserStatus = None):
+    def __init__(self, user_id: int = None, user_name: str = None, first_name: str = None, last_name: str = None,
+                 email: str = None, password: str = None, phone: str = None, user_status: UserStatus = None):
         self.id = user_id
         self.user_name = user_name
         self.first_name = first_name
@@ -36,7 +36,7 @@ class User(BaseApiClass):
                 "phone": self.phone, "status": self.user_status.value}
 
     @staticmethod
-    def from_json(json):
+    def from_json(json: str):
         if "id" in json and "username" in json \
                 and "firstName" in json and "lastName" in json \
                 and "email" in json and "password" in json \
@@ -52,7 +52,7 @@ class User(BaseApiClass):
         User.db.user_create_with_list(user_list)
 
     @staticmethod
-    def get_by_name(name):
+    def get_by_name(name: str):
         return User.db.user_find_by_name(name)
 
     def create(self):
@@ -64,7 +64,7 @@ class User(BaseApiClass):
     def logout(self):
         self.db.user_logout()
 
-    def update(self, new_user):
+    def update(self, new_user: str):
         self.db.user_update(new_user, self)
 
     def delete(self):

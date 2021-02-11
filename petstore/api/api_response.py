@@ -10,7 +10,7 @@ class ApiResponseType(Enum):
 
 
 class ApiResponse:
-    def __init__(self, code, response_type: ApiResponseType, message):
+    def __init__(self, code: int, response_type: ApiResponseType, message):
         self.code = code
         self.type = response_type
         self.message = message

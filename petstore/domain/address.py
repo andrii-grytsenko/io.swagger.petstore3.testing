@@ -11,7 +11,7 @@ class Address(BaseApiClass):
         "zip": Attr("zip", str),
     }
 
-    def __init__(self, street=None, city=None, state=None, zip_code=None):
+    def __init__(self, street: str = None, city: str = None, state: str = None, zip_code: str = None):
         self.street = street
         self.city = city
         self.state = state

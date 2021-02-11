@@ -18,7 +18,7 @@ class Pet(BaseApiClass):
 
     db = None  # database.Database()
 
-    def __init__(self, pet_id=None, name=None, category: Category = None,
+    def __init__(self, pet_id: int = None, name: str = None, category: Category = None,
                  photo_urls: [] = None, tags: [Tag] = None, status: PetStatus = None):
         self.id = pet_id
         self.name = name
@@ -33,7 +33,7 @@ class Pet(BaseApiClass):
                 "status": self.status.value}
 
     @staticmethod
-    def from_json(json):
+    def from_json(json: str):
         if "id" in json and "name" in json and "category" in json \
                 and "photoUrls" in json and "tags" in json and "status" in json:
             return Pet(json["id"], json["name"], Category.from_json(json["category"]),
@@ -47,11 +47,11 @@ class Pet(BaseApiClass):
         return Pet.db.pet_find_by_status(status)
 
     @staticmethod
-    def find_by_tags(tag_list):
+    def find_by_tags(tag_list: [Tag]):
         return Pet.db.pet_find_by_tags(tag_list)
 
     @staticmethod
-    def find_by_id(pet_id):
+    def find_by_id(pet_id: int):
         return Pet.db.pet_find_by_id(pet_id)
 
     def update(self):
@@ -63,9 +63,9 @@ class Pet(BaseApiClass):
     def update_with_form_data(self, name, status: PetStatus):
         self.db.pet_update_by_form_data(self.id, name, status)
 
-    def delete(self, api_key):
+    def delete(self, api_key: str):
         self.db.pet_delete(self.id, api_key)
 
-    def upload_image(self, file_name, metadata):
+    def upload_image(self, file_name: str, metadata: str):
         with open(file_name, "rb") as f:
             self.db.pet_upload_image(self.id, metadata, f)
