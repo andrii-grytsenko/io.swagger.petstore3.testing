@@ -9,12 +9,3 @@ class BaseApiClass(JsonMappedModel, ABC):
             return JsonTransmuter.transmute_to(self) == JsonTransmuter.transmute_to(other)
         else:
             return False
-
-    @abstractmethod
-    def to_json(self):
-        pass
-
-    @classmethod
-    @abstractmethod
-    def from_json(cls, json):
-        pass

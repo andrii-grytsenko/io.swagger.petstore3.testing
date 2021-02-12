@@ -15,13 +15,3 @@ class Customer(BaseApiClass):
         self.id = customer_id
         self.user_name = user_name
         self.address = address
-
-    def to_json(self):
-        return {"id": self.id, "username": self.user_name, "address": self.address.to_json()}
-
-    @classmethod
-    def from_json(cls, json):
-        if "id" in json and "username" in json and "address" in json:
-            return cls(json["id"], json["username"], Address.from_json(json["address"]))
-        else:
-            return None

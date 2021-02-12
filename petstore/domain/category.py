@@ -12,13 +12,3 @@ class Category(BaseApiClass):
     def __init__(self, category_id: int = None, category_name: str = None):
         self.id = category_id
         self.name = category_name
-
-    def to_json(self):
-        return {"id": self.id, "name": self.name}
-
-    @classmethod
-    def from_json(cls, json):
-        if "id" in json and "name" in json:
-            return cls(json["id"], json["name"])
-        else:
-            return None
