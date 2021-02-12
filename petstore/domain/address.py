@@ -20,9 +20,9 @@ class Address(BaseApiClass):
     def to_json(self):
         return {"street": self.street, "city": self.city, "state": self.state, "zip": self.zip}
 
-    @staticmethod
-    def from_json(json):
+    @classmethod
+    def from_json(cls, json):
         if "street" in json and "city" in json and "state" in json and "zip" in json:
-            return Address(json["street"], json["city"], json["state"], json["zip"])
+            return cls(json["street"], json["city"], json["state"], json["zip"])
         else:
             return None

@@ -19,9 +19,9 @@ class Customer(BaseApiClass):
     def to_json(self):
         return {"id": self.id, "username": self.user_name, "address": self.address.to_json()}
 
-    @staticmethod
-    def from_json(json):
+    @classmethod
+    def from_json(cls, json):
         if "id" in json and "username" in json and "address" in json:
-            return Customer(json["id"], json["username"], Address.from_json(json["address"]))
+            return cls(json["id"], json["username"], Address.from_json(json["address"]))
         else:
             return None

@@ -32,8 +32,8 @@ class Pet(BaseApiClass):
                 "photoUrls": self.photo_urls, "tags": [*map(lambda x: x.to_json(), self.tags)],
                 "status": self.status.value}
 
-    @staticmethod
-    def from_json(json: str):
+    @classmethod
+    def from_json(cls, json):
         if "id" in json and "name" in json and "category" in json \
                 and "photoUrls" in json and "tags" in json and "status" in json:
             return Pet(json["id"], json["name"], Category.from_json(json["category"]),
@@ -42,17 +42,17 @@ class Pet(BaseApiClass):
         else:
             return None
 
-    @staticmethod
-    def find_by_status(status: PetStatus):
-        return Pet.db.pet_find_by_status(status)
+    @classmethod
+    def find_by_status(cls, status: PetStatus):
+        return cls.db.pet_find_by_status(status)
 
-    @staticmethod
-    def find_by_tags(tag_list: [Tag]):
-        return Pet.db.pet_find_by_tags(tag_list)
+    @classmethod
+    def find_by_tags(cls, tag_list: [Tag]):
+        return cls.db.pet_find_by_tags(tag_list)
 
-    @staticmethod
-    def find_by_id(pet_id: int):
-        return Pet.db.pet_find_by_id(pet_id)
+    @classmethod
+    def find_by_id(cls, pet_id: int):
+        return cls.db.pet_find_by_id(pet_id)
 
     def update(self):
         self.db.pet_update(self)

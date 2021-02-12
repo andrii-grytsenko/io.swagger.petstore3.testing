@@ -30,24 +30,24 @@ class Order(BaseApiClass):
                 "quantity": self.quantity, "shipDate": self.ship_date,
                 "status": self.status.value, "complete": self.complete}
 
-    @staticmethod
-    def from_json(json: str):
+    @classmethod
+    def from_json(cls, json):
         if "id" in json and "petId" in json \
                 and "quantity" in json and "shipDate" in json \
                 and "status" in json and "complete" in json:
-            return Order(json["id"], json["petId"], json["quantity"],
-                         json["shipDate"], OrderStatus(json["status"]),
-                         json["complete"])
+            return cls(json["id"], json["petId"], json["quantity"],
+                       json["shipDate"], OrderStatus(json["status"]),
+                       json["complete"])
         else:
             return None
 
-    @staticmethod
-    def store_inventory():
-        return Order.db.store_inventory()
+    @classmethod
+    def store_inventory(cls):
+        return cls.db.store_inventory()
 
-    @staticmethod
-    def find_by_id(order_id: int):
-        return Order.db.store_find_order_by_id(order_id)
+    @classmethod
+    def find_by_id(cls, order_id: int):
+        return cls.db.store_find_order_by_id(order_id)
 
     def place(self):
         self.db.store_place_order(self)

@@ -14,7 +14,7 @@ class BaseApiClass(JsonMappedModel, ABC):
     def to_json(self):
         pass
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def from_json(json):
+    def from_json(cls, json):
         pass

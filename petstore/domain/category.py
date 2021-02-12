@@ -16,9 +16,9 @@ class Category(BaseApiClass):
     def to_json(self):
         return {"id": self.id, "name": self.name}
 
-    @staticmethod
-    def from_json(json):
+    @classmethod
+    def from_json(cls, json):
         if "id" in json and "name" in json:
-            return Category(json["id"], json["name"])
+            return cls(json["id"], json["name"])
         else:
             return None

@@ -35,25 +35,25 @@ class User(BaseApiClass):
                 "email": self.email, "password": self.password,
                 "phone": self.phone, "status": self.user_status.value}
 
-    @staticmethod
-    def from_json(json: str):
+    @classmethod
+    def from_json(cls, json):
         if "id" in json and "username" in json \
                 and "firstName" in json and "lastName" in json \
                 and "email" in json and "password" in json \
                 and "phone" in json and "status" in json:
-            return User(json["id"], json["username"], json["firstName"],
-                        json["lastName"], json["email"], json["password"],
-                        json["phone"], UserStatus(json["status"]))
+            return cls(json["id"], json["username"], json["firstName"],
+                       json["lastName"], json["email"], json["password"],
+                       json["phone"], UserStatus(json["status"]))
         else:
             return None
 
-    @staticmethod
-    def create_with_list(user_list: []):
+    @classmethod
+    def create_with_list(cls, user_list: []):
         User.db.user_create_with_list(user_list)
 
-    @staticmethod
-    def get_by_name(name: str):
-        return User.db.user_find_by_name(name)
+    @classmethod
+    def get_by_name(cls, name: str):
+        return cls.db.user_find_by_name(name)
 
     def create(self):
         self.db.user_create(*(self.to_json().values()))
